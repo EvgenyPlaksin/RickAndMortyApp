@@ -7,10 +7,16 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.lnight.rickandmortyfacts.R
+import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListViewModel
 
 @Composable
-fun CharactersListScreen() {
+fun CharactersListScreen(
+    viewModel: CharactersListViewModel = hiltViewModel(),
+    navController: NavController
+) {
 
     Column(
         modifier = Modifier
@@ -29,10 +35,10 @@ fun CharactersListScreen() {
             hint = "Search...",
             modifier = Modifier.fillMaxWidth()
         ) {
-
+            viewModel.onSearch(it)
         }
         Spacer(modifier = Modifier.height(16.dp))
-        CharactersList()
+        CharactersList(navController = navController)
     }
 
 }

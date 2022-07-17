@@ -18,14 +18,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.lnight.rickandmortyfacts.domain.utils.shouldLoadMore
+import androidx.navigation.NavController
+import com.lnight.rickandmortyfacts.common.Screen
+import com.lnight.rickandmortyfacts.common.shouldLoadMore
 import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CharactersList(
     modifier: Modifier = Modifier,
-    viewModel: CharactersListViewModel = hiltViewModel()
+    viewModel: CharactersListViewModel = hiltViewModel(),
+    navController: NavController
 ) {
 
     val state = viewModel.state.value
@@ -71,18 +74,26 @@ fun CharactersList(
             state = listState,
             cells = GridCells.Fixed(2)
         ) {
-            if (state.charactersListEntity != null) {
-                items(state.charactersListEntity.charactersData) { character ->
 
-                    val context = LocalContext.current
+            if(viewModel.searchedList.value.isNotEmpty()) {
+                items(viewModel.searchedList.value) { character ->
                     CharacterItem(
                         entry = character,
                         onClick = {
-                            Toast.makeText(
-                                context,
-                                "Clicked on item with id $it",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            navController.navigate(Screen.DetailScreen.route + "/${character.id}")
+                        },
+                        modifier = Modifier.padding(start = 6.dp, top = 6.dp)
+                    )
+                }
+            }
+
+            if (state.charactersListEntity != null && viewModel.searchedList.value.isEmpty() && !viewModel.isNullResult) {
+                items(state.charactersListEntity.charactersData) { character ->
+
+                    CharacterItem(
+                        entry = character,
+                        onClick = {
+                            navController.navigate(Screen.DetailScreen.route + "/${character.id}")
                         },
                         modifier = Modifier.padding(start = 6.dp, top = 6.dp)
                     )

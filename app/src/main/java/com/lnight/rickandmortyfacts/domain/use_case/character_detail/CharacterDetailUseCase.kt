@@ -3,7 +3,7 @@ package com.lnight.rickandmortyfacts.domain.use_case.character_detail
 import com.lnight.rickandmortyfacts.domain.model.DetailCharacterData
 import com.lnight.rickandmortyfacts.domain.model.mappers.toDetailCharacterData
 import com.lnight.rickandmortyfacts.domain.repository.Repository
-import com.lnight.rickandmortyfacts.domain.utils.Resource
+import com.lnight.rickandmortyfacts.common.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
