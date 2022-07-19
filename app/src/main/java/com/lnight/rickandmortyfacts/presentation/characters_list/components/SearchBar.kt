@@ -18,19 +18,19 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListViewModel
 
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = "",
-    onSearch: (String) -> Unit = {}
+    onSearch: (String) -> Unit = {},
+    viewModel: CharactersListViewModel = hiltViewModel()
 ) {
-    var text by remember {
-        mutableStateOf("")
-    }
-    var isHintDisplayed by remember {
-        mutableStateOf(hint != "")
-    }
+    val text = viewModel.searchText.value
+
+    val isHintDisplayed = viewModel.isHintDisplayed.value
 
     Box(modifier = modifier) {
         BasicTextField(
@@ -38,7 +38,7 @@ fun SearchBar(
             maxLines = 1,
             singleLine = true,
             onValueChange = {
-                text = it
+                viewModel.searchText.value = it
                 onSearch(it)
             },
             textStyle = LocalTextStyle.current.copy(color = Color.DarkGray),
@@ -48,7 +48,7 @@ fun SearchBar(
                 .background(Color.White, CircleShape)
                 .padding(horizontal = 20.dp, vertical = 12.dp)
                 .onFocusChanged {
-                    isHintDisplayed = it.isFocused
+                    viewModel.isHintDisplayed.value = if(viewModel.searchText.value.isBlank()) it.isFocused else true
                 }
         )
         if(!isHintDisplayed) {

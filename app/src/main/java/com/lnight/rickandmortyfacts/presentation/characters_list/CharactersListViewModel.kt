@@ -27,6 +27,12 @@ class CharactersListViewModel @Inject constructor(
 
     var isNullResult = false
 
+    val previousPage = mutableStateOf<Int>(0)
+
+    val searchText = mutableStateOf<String>("")
+
+    val isHintDisplayed = mutableStateOf<Boolean>(searchText.value.isBlank())
+
     fun onSearch(query: String) {
         Log.e("TAG", "onSearch -> $query")
         if(query.isEmpty()) {
@@ -34,8 +40,12 @@ class CharactersListViewModel @Inject constructor(
             isNullResult = false
             return
         }
-        _searchedList.value = state.value.charactersListEntity!!.charactersData.filter { charactersData ->
-            charactersData.name.contains(query, ignoreCase = true)
+        try {
+            _searchedList.value = state.value.charactersListEntity!!.charactersData.filter { charactersData ->
+                charactersData.name.contains(query, ignoreCase = true)
+            }
+        } catch (e: NullPointerException) {
+            _state.value = state.value.copy(error = "Unknown error occurred")
         }
         isNullResult = _searchedList.value.isEmpty()
     }

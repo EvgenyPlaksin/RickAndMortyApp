@@ -58,15 +58,18 @@ fun CharactersList(
             )
         }
     }
-    val previousPage = remember {
-        mutableStateOf(0)
-    }
+    val previousPage = viewModel.previousPage.value
+
     LaunchedEffect(key1 = listState.shouldLoadMore()) {
         val page = if(state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 10 + 1 else 1
-        if(!state.isLoading && page != previousPage.value) {
-            Log.e("TAG", "shouldLoadMore -> $page, ${listState.layoutInfo.totalItemsCount}")
+        if(!state.isLoading && page != previousPage && page != (state.charactersListEntity?.pageInfo?.pages?.plus(
+                1
+            )
+                ?: 0)
+        ) {
+            Log.e("TAG", "shouldLoadMore -> $page, ${listState.layoutInfo.totalItemsCount}, $previousPage")
             viewModel.getCharactersList(page)
-            previousPage.value = page
+            viewModel.previousPage.value = page
         }
     }
         LazyVerticalGrid(

@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         ) {
-                            CharacterDetailScreen(it.arguments?.getInt("id", -1) ?: -1)
+                            CharacterDetailScreen()
                         }
                     }
                 }

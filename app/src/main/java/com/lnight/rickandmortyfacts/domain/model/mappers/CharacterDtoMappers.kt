@@ -24,11 +24,20 @@ fun CharactersListResponseDto.toCharactersListEntity(): CharactersListEntity {
 }
 
 fun Result.toDetailCharacterData(): DetailCharacterData {
+
+    val status: Boolean? = when (status) {
+        "Alive" -> true
+        "Dead" -> false
+        else -> null
+    }
+
     return DetailCharacterData(
         id = id,
         name = name,
         image = image,
         gender = gender,
-        cityName = location.name
+        cityName = location.name,
+        status = status,
+        species = species
     )
 }

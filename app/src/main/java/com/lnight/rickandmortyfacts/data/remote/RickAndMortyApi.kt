@@ -13,7 +13,7 @@ interface RickAndMortyApi {
         @Query("page") page: Int
     ): CharactersListResponseDto
 
-    @GET("character")
+    @GET("character/{id}")
     suspend fun getCharacterById(
         @Path("id") id: Int
     ): Result

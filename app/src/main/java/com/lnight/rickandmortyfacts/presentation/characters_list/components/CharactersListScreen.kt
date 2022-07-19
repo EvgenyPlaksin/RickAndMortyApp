@@ -33,10 +33,10 @@ fun CharactersListScreen(
         )
         SearchBar(
             hint = "Search...",
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            viewModel.onSearch(it)
-        }
+            modifier = Modifier.fillMaxWidth(),
+            onSearch = {
+                viewModel.onSearch(it)
+            })
         Spacer(modifier = Modifier.height(16.dp))
         CharactersList(navController = navController)
     }
