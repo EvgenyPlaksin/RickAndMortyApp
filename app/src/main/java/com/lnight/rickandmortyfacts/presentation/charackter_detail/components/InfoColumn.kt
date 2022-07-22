@@ -23,6 +23,7 @@ fun InfoColumn(
         modifier = modifier.fillMaxWidth()
     ) {
         Text(
+            color = Color.White,
             text = characterData.name,
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
@@ -49,6 +50,7 @@ fun InfoColumn(
                 null -> "Unknown"
             }
             Text(
+                color = Color.White,
                 text = text,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Light
@@ -61,6 +63,7 @@ fun InfoColumn(
         ) {
             Column {
                 Text(
+                    color = Color.White,
                     text = "Species",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -68,6 +71,7 @@ fun InfoColumn(
                     modifier = Modifier.width(110.dp)
                 )
                 Text(
+                    color = Color.White,
                     text = characterData.species,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Light,
@@ -78,6 +82,7 @@ fun InfoColumn(
 
             Column {
                 Text(
+                    color = Color.White,
                     text = "Location",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -85,6 +90,7 @@ fun InfoColumn(
                     modifier = Modifier.width(110.dp)
                 )
                 Text(
+                    color = Color.White,
                     text = characterData.cityName,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Light,
@@ -95,6 +101,7 @@ fun InfoColumn(
 
             Column {
                 Text(
+                    color = Color.White,
                     text = "Gender",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
@@ -102,6 +109,7 @@ fun InfoColumn(
                     modifier = Modifier.width(110.dp)
                 )
                 Text(
+                    color = Color.White,
                     text = characterData.gender,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Light,

@@ -31,56 +31,114 @@ fun CharacterItem(
     entry: CharactersData,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit,
+    isCompactScreen: Boolean
 ) {
 
-    Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(10.dp))
-            .aspectRatio(1f)
-            .clickable {
-                onClick(entry.id)
-            }
-    ) {
-        Box {
-            val request = ImageRequest.Builder(LocalContext.current)
-                .data(entry.image)
-                .crossfade(true)
-                .build()
+    if(isCompactScreen) {
+        Box(
+            modifier = modifier
+                .clip(RoundedCornerShape(10.dp))
+                .aspectRatio(1f)
+                .clickable {
+                    onClick(entry.id)
+                }
+        ) {
+            Box {
+                val request = ImageRequest.Builder(LocalContext.current)
+                    .data(entry.image)
+                    .crossfade(true)
+                    .build()
 
-            SubcomposeAsyncImage(
-                model = request,
-                contentDescription = "character",
-                loading = {
-                    CircularProgressIndicator(
-                        color = MaterialTheme.colors.primary,
-                        modifier = Modifier
-                            .scale(0.5f)
-                    )
-                },
-                modifier = Modifier
-                    .size(200.dp)
-                    .align(Center)
-            )
-            Row(
-                modifier = Modifier
-                    .background(
-                        Brush.verticalGradient(
-                            listOf(
-                                Color.Transparent,
-                                Color.Black
-                            ),
-                            startY = 200f
+                SubcomposeAsyncImage(
+                    model = request,
+                    contentDescription = "character",
+                    loading = {
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colors.primary,
+                            modifier = Modifier
+                                .scale(0.5f)
                         )
-                    )
-                    .fillMaxSize(),
-                verticalAlignment = Bottom
-            ) {
-                Text(
-                    text = entry.name,
-                    fontSize = 20.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    },
+                    modifier = Modifier
+                        .size(200.dp)
+                        .align(Center)
                 )
+                Row(
+                    modifier = Modifier
+                        .background(
+                            Brush.verticalGradient(
+                                listOf(
+                                    Color.Transparent,
+                                    Color.Black
+                                ),
+                                startY = 200f
+                            )
+                        )
+                        .fillMaxSize(),
+                    verticalAlignment = Bottom
+                ) {
+                    Text(
+                        text = entry.name,
+                        fontSize = 20.sp,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+        }
+    } else {
+        Box(
+            modifier = modifier
+                .clip(RoundedCornerShape(10.dp))
+                .aspectRatio(1f)
+                .clickable {
+                    onClick(entry.id)
+                }
+        ) {
+            Box {
+                val request = ImageRequest.Builder(LocalContext.current)
+                    .data(entry.image)
+                    .crossfade(true)
+                    .build()
+
+                SubcomposeAsyncImage(
+                    model = request,
+                    contentDescription = "character",
+                    loading = {
+                        CircularProgressIndicator(
+                            color = MaterialTheme.colors.primary,
+                            modifier = Modifier
+                                .scale(0.3f)
+                        )
+                    },
+                    modifier = Modifier
+                        .size(250.dp)
+                        .align(Center)
+                )
+                Row(
+                    modifier = Modifier
+                        .background(
+                            Brush.verticalGradient(
+                                listOf(
+                                    Color.Transparent,
+                                    Color.Black
+                                ),
+                                startY = 150f
+                            )
+                        )
+                        .fillMaxSize(),
+                    verticalAlignment = Bottom
+                ) {
+                    Text(
+                        text = entry.name,
+                        fontSize = 20.sp,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
             }
         }
     }

@@ -45,7 +45,7 @@ class CharactersListViewModel @Inject constructor(
                 charactersData.name.contains(query, ignoreCase = true)
             }
         } catch (e: NullPointerException) {
-            _state.value = state.value.copy(error = "Unknown error occurred")
+           return
         }
         isNullResult = _searchedList.value.isEmpty()
     }

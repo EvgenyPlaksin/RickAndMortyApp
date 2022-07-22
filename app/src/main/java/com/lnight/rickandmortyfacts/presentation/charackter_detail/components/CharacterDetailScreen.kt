@@ -3,7 +3,9 @@ package com.lnight.rickandmortyfacts.presentation.charackter_detail.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -21,7 +23,8 @@ import com.lnight.rickandmortyfacts.presentation.charackter_detail.CharacterDeta
 
 @Composable
 fun CharacterDetailScreen(
-    viewModel: CharacterDetailViewModel = hiltViewModel()
+    viewModel: CharacterDetailViewModel = hiltViewModel(),
+    isCompactScreen: Boolean = true
 ) {
     val state = viewModel.state.value
 
@@ -52,22 +55,50 @@ fun CharacterDetailScreen(
 
     if(state.characterData != null) {
 
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Spacer(modifier = Modifier.height(20.dp))
+        if(isCompactScreen) {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Spacer(modifier = Modifier.height(20.dp))
 
-            CharacterImageBox(
+                CharacterImageBox(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(400.dp)
+                        .padding(16.dp),
+                    image = state.characterData.image,
+                    name = state.characterData.name
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                InfoColumn(
+                    characterData = state.characterData,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+            }
+        } else {
+            Column(
                 modifier = Modifier
-                    .padding(16.dp),
-                image = state.characterData.image,
-                name = state.characterData.name
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            InfoColumn(
-                characterData = state.characterData,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Spacer(modifier = Modifier.height(20.dp))
+
+                CharacterImageBox(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(210.dp)
+                        .padding(horizontal = 30.dp),
+                    image = state.characterData.image,
+                    name = state.characterData.name,
+                    imageSize = 210.dp
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                InfoColumn(
+                    characterData = state.characterData,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+            }
         }
     }
 }

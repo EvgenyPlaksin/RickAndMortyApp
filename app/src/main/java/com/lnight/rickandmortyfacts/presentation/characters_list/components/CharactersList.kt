@@ -28,7 +28,8 @@ import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListV
 fun CharactersList(
     modifier: Modifier = Modifier,
     viewModel: CharactersListViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    isCompactScreen: Boolean = true
 ) {
 
     val state = viewModel.state.value
@@ -61,7 +62,12 @@ fun CharactersList(
     val previousPage = viewModel.previousPage.value
 
     LaunchedEffect(key1 = listState.shouldLoadMore()) {
-        val page = if(state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 10 + 1 else 1
+        val page =
+            if(isCompactScreen) {
+                if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 10 + 1 else 1
+            } else {
+                if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 5 + 1 else 1
+            }
         if(!state.isLoading && page != previousPage && page != (state.charactersListEntity?.pageInfo?.pages?.plus(
                 1
             )
@@ -72,39 +78,49 @@ fun CharactersList(
             viewModel.previousPage.value = page
         }
     }
+
         LazyVerticalGrid(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .fillMaxWidth(),
             state = listState,
-            cells = GridCells.Fixed(2)
+            cells = if(isCompactScreen) GridCells.Fixed(2) else GridCells.Fixed(4)
         ) {
 
             if(viewModel.searchedList.value.isNotEmpty()) {
                 items(viewModel.searchedList.value) { character ->
-                    CharacterItem(
-                        entry = character,
-                        onClick = {
-                            navController.navigate(Screen.DetailScreen.route + "/${character.id}")
-                        },
-                        modifier = Modifier.padding(start = 6.dp, top = 6.dp)
-                    )
+                        CharacterItem(
+                            entry = character,
+                            onClick = {
+                                navController.navigate(Screen.DetailScreen.route + "/${character.id}")
+                            },
+                            modifier = Modifier.padding(start = if(isCompactScreen) 6.dp else 15.dp, top = if(isCompactScreen) 6.dp else 15.dp),
+                            isCompactScreen = isCompactScreen
+                        )
+
                 }
             }
 
             if (state.charactersListEntity != null && viewModel.searchedList.value.isEmpty() && !viewModel.isNullResult) {
                 items(state.charactersListEntity.charactersData) { character ->
+                        CharacterItem(
+                            entry = character,
+                            onClick = {
+                                navController.navigate(Screen.DetailScreen.route + "/${character.id}")
+                            },
+                            modifier = Modifier.padding(start = if(isCompactScreen) 6.dp else 15.dp, top = if(isCompactScreen) 6.dp else 15.dp),
+                            isCompactScreen = isCompactScreen
+                        )
 
-                    CharacterItem(
-                        entry = character,
-                        onClick = {
-                            navController.navigate(Screen.DetailScreen.route + "/${character.id}")
-                        },
-                        modifier = Modifier.padding(start = 6.dp, top = 6.dp)
-                    )
                 }
 
             }
             val page =
-                if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 10 + 1 else 1
+                if(isCompactScreen) {
+                    if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 10 + 1 else 1
+                } else {
+                    if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 5 + 1 else 1
+                }
+
             if (page == (state.charactersListEntity?.pageInfo?.pages
                     ?: 0)
             ) {

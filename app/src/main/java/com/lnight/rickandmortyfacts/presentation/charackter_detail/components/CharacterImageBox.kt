@@ -2,10 +2,7 @@ package com.lnight.rickandmortyfacts.presentation.charackter_detail.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -17,6 +14,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
@@ -30,7 +28,8 @@ fun CharacterImageBox(
     image: String,
     name: String,
     modifier: Modifier = Modifier,
-    viewModel: CharacterDetailViewModel = hiltViewModel()
+    viewModel: CharacterDetailViewModel = hiltViewModel(),
+    imageSize: Dp = 300.dp
 ) {
 
     var dominantColor by remember {
@@ -61,28 +60,26 @@ fun CharacterImageBox(
 
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .height(400.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(gradient)
-            .clickable {  }
+            .clickable { }
     ) {
-
-        SubcomposeAsyncImage(
-            model = request,
-            contentDescription =  name,
-                    loading = {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colors.primary,
-                    modifier = Modifier
-                        .scale(0.5f)
-                )
-            },
-            modifier = Modifier
-                .size(300.dp)
-                .align(Alignment.Center)
-                .clip(RoundedCornerShape(8.dp))
-        )
+            SubcomposeAsyncImage(
+                model = request,
+                contentDescription = name,
+                loading = {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colors.primary,
+                        modifier = Modifier
+                            .scale(0.5f)
+                    )
+                },
+                modifier = Modifier
+                    .size(imageSize)
+                    .padding(all = if(imageSize != 300.dp) 16.dp else 0.dp)
+                    .align(Alignment.Center)
+                    .clip(RoundedCornerShape(8.dp))
+            )
     }
 
 }
