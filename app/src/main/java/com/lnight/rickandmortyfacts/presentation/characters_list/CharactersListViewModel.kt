@@ -73,7 +73,7 @@ class CharactersListViewModel @Inject constructor(
                     }
                 }
                 is Resource.Error -> {
-                    _state.value = CharactersListState(error = result.message ?: "Unknown error occurred")
+                    _state.value = state.value.copy(isLoading = false, error = result.message ?: "Unknown error occurred")
                 }
             }
         }.launchIn(viewModelScope)

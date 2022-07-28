@@ -21,30 +21,30 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     private val characterDetailUseCase: CharacterDetailUseCase,
-    savedStateHandle: SavedStateHandle
-): ViewModel() {
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val _state = mutableStateOf<CharacterState>(CharacterState())
     val state: State<CharacterState> = _state
 
     init {
-        val id = savedStateHandle.get<Int>("id")
-        if(id == null || id == -1) {
-            _state.value = CharacterState(error = "Unknown error occurred")
-        } else {
-            Log.e("TAG", "id -> $id")
-            getCharacterData(id)
-        }
+        getCharacterData()
     }
 
-    private fun getCharacterData(id: Int) {
+    fun getCharacterData() {
+        val id = savedStateHandle.get<Int>("id")
+        if (id == null || id == -1) {
+            _state.value = CharacterState(error = "Unknown error occurred")
+            return
+        }
         characterDetailUseCase(id).onEach { result ->
-            when(result) {
+            when (result) {
                 is Resource.Success -> {
                     _state.value = CharacterState(characterData = result.data)
                 }
                 is Resource.Error -> {
-                    _state.value = CharacterState(error = result.message ?: "Unknown error occurred")
+                    _state.value =
+                        CharacterState(error = result.message ?: "Unknown error occurred")
                 }
                 is Resource.Loading -> {
                     _state.value = CharacterState(isLoading = true)

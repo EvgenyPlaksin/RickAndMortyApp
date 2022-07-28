@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lnight.rickandmortyfacts.presentation.charackter_detail.CharacterDetailViewModel
+import com.lnight.rickandmortyfacts.presentation.common.RetrySection
 
 @Composable
 fun CharacterDetailScreen(
@@ -33,12 +34,14 @@ fun CharacterDetailScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text(
+            RetrySection(
                 text = state.error,
-                fontSize = 25.sp,
-                color = MaterialTheme.colors.error
+                onClick = {
+                    viewModel.getCharacterData()
+                }
             )
         }
+
     }
 
     if(state.isLoading) {
