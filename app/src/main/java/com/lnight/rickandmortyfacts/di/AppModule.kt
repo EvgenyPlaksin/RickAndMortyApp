@@ -1,6 +1,12 @@
 package com.lnight.rickandmortyfacts.di
 
-import com.lnight.rickandmortyfacts.data.remote.RickAndMortyApi
+import android.app.Application
+import androidx.room.Room
+import com.lnight.rickandmortyfacts.data.data_source.local.RickAndMortyDao
+import com.lnight.rickandmortyfacts.data.data_source.local.RickAndMortyDatabase
+import com.lnight.rickandmortyfacts.data.data_source.remote.RickAndMortyApi
+import com.lnight.rickandmortyfacts.data.repository.LocalRepositoryImpl
+import com.lnight.rickandmortyfacts.domain.repository.LocalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +29,16 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRickAndMortyDao(app: Application): RickAndMortyDao {
+        return Room.databaseBuilder(
+            app,
+            RickAndMortyDatabase::class.java,
+            RickAndMortyDatabase.DATABASE_NAME
+        ).build().dao
     }
 
 }

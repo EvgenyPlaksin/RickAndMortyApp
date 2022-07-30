@@ -1,7 +1,7 @@
-package com.lnight.rickandmortyfacts.data.remote
+package com.lnight.rickandmortyfacts.data.data_source.remote
 
-import com.lnight.rickandmortyfacts.data.remote.dto.CharactersListResponseDto
-import com.lnight.rickandmortyfacts.data.remote.dto.Result
+import com.lnight.rickandmortyfacts.data.data_source.remote.dto.CharactersListResponseDto
+import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -1,21 +1,17 @@
 package com.lnight.rickandmortyfacts.presentation.characters_list.components
 
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,7 +21,6 @@ import com.lnight.rickandmortyfacts.common.shouldLoadMore
 import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListViewModel
 import com.lnight.rickandmortyfacts.presentation.common.RetrySection
 
-@ExperimentalFoundationApi
 @Composable
 fun CharactersList(
     modifier: Modifier = Modifier,
@@ -35,7 +30,7 @@ fun CharactersList(
 ) {
 
     val state = viewModel.state.value
-    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
 
     if (state.isLoading) {
         Box(
@@ -65,12 +60,12 @@ fun CharactersList(
     }
     val previousPage = viewModel.previousPage.value
 
-    LaunchedEffect(key1 = listState.shouldLoadMore()) {
+    LaunchedEffect(key1 = gridState.shouldLoadMore()) {
         val page =
             if (isCompactScreen) {
-                if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 10 + 1 else 1
+                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 10 + 1 else 1
             } else {
-                if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 5 + 1 else 1
+                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 5 + 1 else 1
             }
         if (!state.isLoading && page != previousPage && page != (state.charactersListEntity?.pageInfo?.pages?.plus(
                 1
@@ -79,7 +74,7 @@ fun CharactersList(
         ) {
             Log.e(
                 "TAG",
-                "shouldLoadMore -> $page, ${listState.layoutInfo.totalItemsCount}, $previousPage"
+                "shouldLoadMore -> $page, ${gridState.layoutInfo.totalItemsCount}, $previousPage"
             )
             viewModel.getCharactersList(page)
             viewModel.previousPage.value = page
@@ -89,8 +84,8 @@ fun CharactersList(
     LazyVerticalGrid(
         modifier = modifier
             .fillMaxWidth(),
-        state = listState,
-        cells = if (isCompactScreen) GridCells.Fixed(2) else GridCells.Fixed(4)
+        state = gridState,
+        columns = if (isCompactScreen) GridCells.Fixed(2) else GridCells.Fixed(4)
     ) {
 
         if (viewModel.searchedList.value.isNotEmpty()) {
@@ -129,9 +124,9 @@ fun CharactersList(
         }
         val page =
             if (isCompactScreen) {
-                if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 10 + 1 else 1
+                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 10 + 1 else 1
             } else {
-                if (state.charactersListEntity != null) (listState.layoutInfo.totalItemsCount) / 5 + 1 else 1
+                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 5 + 1 else 1
             }
 
         if (page == (state.charactersListEntity?.pageInfo?.pages

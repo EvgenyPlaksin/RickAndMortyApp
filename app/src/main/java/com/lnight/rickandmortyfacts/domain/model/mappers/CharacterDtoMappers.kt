@@ -1,7 +1,7 @@
 package com.lnight.rickandmortyfacts.domain.model.mappers
 
-import com.lnight.rickandmortyfacts.data.remote.dto.CharactersListResponseDto
-import com.lnight.rickandmortyfacts.data.remote.dto.Result
+import com.lnight.rickandmortyfacts.data.data_source.remote.dto.CharactersListResponseDto
+import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Result
 import com.lnight.rickandmortyfacts.domain.model.CharactersData
 import com.lnight.rickandmortyfacts.domain.model.CharactersListEntity
 import com.lnight.rickandmortyfacts.domain.model.DetailCharacterData

@@ -1,4 +1,4 @@
-package com.lnight.rickandmortyfacts.data.remote.dto
+package com.lnight.rickandmortyfacts.data.data_source.remote.dto
 
 
 import com.google.gson.annotations.SerializedName

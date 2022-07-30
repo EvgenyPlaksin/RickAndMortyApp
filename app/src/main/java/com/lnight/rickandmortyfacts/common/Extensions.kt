@@ -1,7 +1,7 @@
 package com.lnight.rickandmortyfacts.common
 
-import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
 
-fun LazyListState.shouldLoadMore(): Boolean {
+fun LazyGridState.shouldLoadMore(): Boolean {
         return layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1
 }
