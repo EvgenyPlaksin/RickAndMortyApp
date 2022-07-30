@@ -31,8 +31,9 @@ fun CharactersList(
 
     val state = viewModel.state.value
     val gridState = rememberLazyGridState()
+    val cashedList = viewModel.cashedList.value
 
-    if (state.isLoading) {
+    if (state.isLoading && cashedList.isEmpty()) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -44,7 +45,7 @@ fun CharactersList(
         }
     }
 
-    if (state.error.isNotBlank() && state.charactersListEntity == null) {
+    if (state.error.isNotBlank() && state.charactersListEntity == null && cashedList.isEmpty()) {
         RetrySection(
             modifier = Modifier
                 .padding(
@@ -63,21 +64,21 @@ fun CharactersList(
     LaunchedEffect(key1 = gridState.shouldLoadMore()) {
         val page =
             if (isCompactScreen) {
-                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 10 + 1 else 1
+                if (state.charactersListEntity != null || cashedList.isNotEmpty()) (gridState.layoutInfo.totalItemsCount) / 10 + 1 else 1
             } else {
-                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 5 + 1 else 1
+                if (state.charactersListEntity != null || cashedList.isNotEmpty()) (gridState.layoutInfo.totalItemsCount) / 5 + 1 else 1
             }
-        if (!state.isLoading && page != previousPage && page != (state.charactersListEntity?.pageInfo?.pages?.plus(
-                1
-            )
-                ?: 0)
+        Log.e("TAG", "shouldLoadMore -> $page ${page != previousPage}")
+        if (!state.isLoading
+            && page != previousPage
+            && page != (state.charactersListEntity?.pageInfo?.pages?.plus(1) ?: 0)
         ) {
             Log.e(
                 "TAG",
                 "shouldLoadMore -> $page, ${gridState.layoutInfo.totalItemsCount}, $previousPage"
             )
             viewModel.getCharactersList(page)
-            viewModel.previousPage.value = page
+                viewModel.previousPage.value = page
         }
     }
 
@@ -122,6 +123,25 @@ fun CharactersList(
             }
 
         }
+
+        if(cashedList.isNotEmpty() && state.error.isNotBlank()) {
+
+            items(cashedList) { character ->
+                CharacterItem(
+                    entry = character,
+                    onClick = {
+                        navController.navigate(Screen.DetailScreen.route + "/${character.id}")
+                    },
+                    modifier = Modifier.padding(
+                        start = if (isCompactScreen) 6.dp else 15.dp,
+                        top = if (isCompactScreen) 6.dp else 15.dp
+                    ),
+                    isCompactScreen = isCompactScreen
+                )
+            }
+
+        }
+
         val page =
             if (isCompactScreen) {
                 if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 10 + 1 else 1

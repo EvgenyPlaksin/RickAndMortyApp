@@ -8,6 +8,19 @@ plugins {
 android {
     compileSdk 32
 
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
+
+
+    sourceSets {
+        getByName("androidTest") {
+            assets.srcDirs(files(projectDir, "schemas"))
+        }
+    }
+
     defaultConfig {
         applicationId "com.lnight.rickandmortyfacts"
         minSdk 21

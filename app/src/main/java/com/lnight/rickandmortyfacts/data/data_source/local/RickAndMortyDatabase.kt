@@ -2,11 +2,12 @@ package com.lnight.rickandmortyfacts.data.data_source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.lnight.rickandmortyfacts.domain.model.DetailCharacterData
+import com.lnight.rickandmortyfacts.domain.model.CharactersData
 
 @Database(
-    entities = [DetailCharacterData::class],
-    version = 1
+    entities = [CharactersData::class],
+    version = 2,
+    exportSchema = true
 )
 abstract class RickAndMortyDatabase: RoomDatabase() {
 

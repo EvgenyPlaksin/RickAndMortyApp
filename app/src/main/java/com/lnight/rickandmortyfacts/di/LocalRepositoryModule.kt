@@ -1,8 +1,6 @@
 package com.lnight.rickandmortyfacts.di
 
-import com.lnight.rickandmortyfacts.data.repository.ApiRepositoryImpl
 import com.lnight.rickandmortyfacts.data.repository.LocalRepositoryImpl
-import com.lnight.rickandmortyfacts.domain.repository.ApiRepository
 import com.lnight.rickandmortyfacts.domain.repository.LocalRepository
 import dagger.Binds
 import dagger.Module

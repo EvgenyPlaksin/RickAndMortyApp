@@ -5,8 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CharactersData(
-    @PrimaryKey
-    val id: Int = -1,
+    @PrimaryKey val id: Int = -1,
     val name: String,
     val image: String
 )
