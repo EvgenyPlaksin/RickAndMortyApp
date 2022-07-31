@@ -68,7 +68,7 @@ fun CharactersList(
             } else {
                 if (state.charactersListEntity != null || cashedList.isNotEmpty()) (gridState.layoutInfo.totalItemsCount) / 5 + 1 else 1
             }
-        Log.e("TAG", "shouldLoadMore -> $page ${page != previousPage}")
+        Log.e("TAG", "shouldLoadMore -> $page ${page != previousPage}, ${page != (state.charactersListEntity?.pageInfo?.pages?.plus(1) ?: 0)}, ${!state.isLoading}")
         if (!state.isLoading
             && page != previousPage
             && page != (state.charactersListEntity?.pageInfo?.pages?.plus(1) ?: 0)
@@ -78,7 +78,6 @@ fun CharactersList(
                 "shouldLoadMore -> $page, ${gridState.layoutInfo.totalItemsCount}, $previousPage"
             )
             viewModel.getCharactersList(page)
-                viewModel.previousPage.value = page
         }
     }
 
@@ -124,7 +123,7 @@ fun CharactersList(
 
         }
 
-        if(cashedList.isNotEmpty() && state.error.isNotBlank()) {
+        if(cashedList.isNotEmpty() && state.charactersListEntity == null && viewModel.searchedList.value.isEmpty() && !viewModel.isNullResult) {
 
             items(cashedList) { character ->
                 CharacterItem(
@@ -140,24 +139,6 @@ fun CharactersList(
                 )
             }
 
-        }
-
-        val page =
-            if (isCompactScreen) {
-                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 10 + 1 else 1
-            } else {
-                if (state.charactersListEntity != null) (gridState.layoutInfo.totalItemsCount) / 5 + 1 else 1
-            }
-
-        if (page == (state.charactersListEntity?.pageInfo?.pages
-                ?: 0)
-        ) {
-            item {
-                Text(
-                    text = "The end",
-                    fontSize = 25.sp
-                )
-            }
         }
     }
 

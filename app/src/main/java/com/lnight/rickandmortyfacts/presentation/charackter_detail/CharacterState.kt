@@ -1,10 +1,9 @@
 package com.lnight.rickandmortyfacts.presentation.charackter_detail
 
-import androidx.compose.ui.graphics.Color
-import com.lnight.rickandmortyfacts.domain.model.DetailCharacterData
+import com.lnight.rickandmortyfacts.domain.model.CharactersData
 
 data class CharacterState(
     val isLoading: Boolean = false,
-    val characterData: DetailCharacterData? = null,
+    val characterData: CharactersData? = null,
     val error: String = ""
 )

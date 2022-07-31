@@ -11,11 +11,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.lnight.rickandmortyfacts.domain.model.DetailCharacterData
+import com.lnight.rickandmortyfacts.domain.model.CharactersData
 
 @Composable
 fun InfoColumn(
-    characterData: DetailCharacterData,
+    characterData: CharactersData,
     modifier: Modifier = Modifier
 ) {
 

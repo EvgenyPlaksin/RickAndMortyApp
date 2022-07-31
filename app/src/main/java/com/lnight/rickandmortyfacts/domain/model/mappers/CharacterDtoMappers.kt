@@ -4,16 +4,24 @@ import com.lnight.rickandmortyfacts.data.data_source.remote.dto.CharactersListRe
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Result
 import com.lnight.rickandmortyfacts.domain.model.CharactersData
 import com.lnight.rickandmortyfacts.domain.model.CharactersListEntity
-import com.lnight.rickandmortyfacts.domain.model.DetailCharacterData
 
 fun CharactersListResponseDto.toCharactersListEntity(): CharactersListEntity {
     val charactersData = mutableListOf<CharactersData>()
     results.forEach { result ->
+        val status: Boolean? = when (result.status) {
+            "Alive" -> true
+            "Dead" -> false
+            else -> null
+        }
         charactersData.add(
             CharactersData(
                 id = result.id,
                 name = result.name,
-                image = result.image
+                image = result.image,
+                gender = result.gender,
+                cityName = result.location.name,
+                species = result.species,
+                status = status
             )
         )
     }
@@ -23,7 +31,7 @@ fun CharactersListResponseDto.toCharactersListEntity(): CharactersListEntity {
     )
 }
 
-fun Result.toDetailCharacterData(): DetailCharacterData {
+fun Result.toCharacterData(): CharactersData {
 
     val status: Boolean? = when (status) {
         "Alive" -> true
@@ -31,7 +39,7 @@ fun Result.toDetailCharacterData(): DetailCharacterData {
         else -> null
     }
 
-    return DetailCharacterData(
+    return CharactersData(
         id = id,
         name = name,
         image = image,

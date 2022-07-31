@@ -1,9 +1,9 @@
 package com.lnight.rickandmortyfacts.domain.use_case.character_detail
 
-import com.lnight.rickandmortyfacts.domain.model.DetailCharacterData
-import com.lnight.rickandmortyfacts.domain.model.mappers.toDetailCharacterData
+import com.lnight.rickandmortyfacts.domain.model.mappers.toCharacterData
 import com.lnight.rickandmortyfacts.domain.repository.ApiRepository
 import com.lnight.rickandmortyfacts.common.Resource
+import com.lnight.rickandmortyfacts.domain.model.CharactersData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -14,19 +14,19 @@ class CharacterDetailUseCase @Inject constructor(
     private val apiRepository: ApiRepository
 ) {
 
-     operator fun invoke(id: Int): Flow<Resource<DetailCharacterData>> = flow {
+     operator fun invoke(id: Int): Flow<Resource<CharactersData>> = flow {
         try {
-            emit(Resource.Loading<DetailCharacterData>())
+            emit(Resource.Loading<CharactersData>())
             val data = apiRepository.getCharacterById(id)
-            emit(Resource.Success<DetailCharacterData>(data.toDetailCharacterData()))
+            emit(Resource.Success<CharactersData>(data.toCharacterData()))
         } catch (e: HttpException) {
             emit(
-                Resource.Error<DetailCharacterData>(
+                Resource.Error<CharactersData>(
                     e.localizedMessage ?: "An unexpected error occurred"
                 )
             )
         } catch (e: IOException) {
-            emit(Resource.Error<DetailCharacterData>("Couldn't reach server, check your internet connection"))
+            emit(Resource.Error<CharactersData>("Couldn't reach server, check your internet connection"))
         }
     }
 }

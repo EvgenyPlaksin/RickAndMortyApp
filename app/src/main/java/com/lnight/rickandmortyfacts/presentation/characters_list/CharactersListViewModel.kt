@@ -64,6 +64,7 @@ class CharactersListViewModel @Inject constructor(
                 return
             }
         }
+        Log.e("TAG", "searchList -> ${searchedList.value}")
         isNullResult = _searchedList.value.isEmpty()
     }
 
@@ -72,6 +73,7 @@ class CharactersListViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                      if(result.data != null) {
+                         previousPage.value = page
                          if(cashedList.value.isEmpty()) {
                              _state.value = state.value.copy(
                                  charactersListEntity = CharactersListEntity(
@@ -82,19 +84,15 @@ class CharactersListViewModel @Inject constructor(
                                  ),
                                  isLoading = false
                              )
+                             _state.value.charactersListEntity?.charactersData?.forEach { character ->
+                                 addCharacter(character)
+                             }
                          } else {
-                             _state.value = state.value.copy(
-                                 charactersListEntity = CharactersListEntity(
-                                     pageInfo = result.data.pageInfo,
-                                     charactersData = cashedList.value.plus(
-                                         result.data.charactersData
-                                     )
-                                 ),
-                                 isLoading = false
-                             )
-                         }
-                         _state.value.charactersListEntity?.charactersData?.forEach { character ->
-                             addCharacter(character)
+                             _cashedList.value = cashedList.value + result.data.charactersData
+
+                             result.data.charactersData.forEach { character ->
+                                 addCharacter(character)
+                             }
                          }
                      } else {
                          _state.value = state.value.copy(isLoading = false)
@@ -118,11 +116,9 @@ class CharactersListViewModel @Inject constructor(
     }
 
     private fun getCachedData() {
-        Log.e("TAG", "getCashedList")
         if(cashedList.value.isEmpty()) {
             getCharactersJob?.cancel()
             getCharactersJob = getCashedListUseCase().onEach { result ->
-                Log.e("TAG", "cashed list -> $result")
                 _cashedList.value = result
             }.launchIn(viewModelScope)
         }
@@ -130,7 +126,6 @@ class CharactersListViewModel @Inject constructor(
 
     private fun addCharacter(charactersData: CharactersData) {
         viewModelScope.launch {
-            Log.e("TAG", "addCharacter -> $charactersData")
             addCharacterUseCase(charactersData)
         }
     }

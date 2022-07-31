@@ -13,9 +13,9 @@ class LocalRepositoryImpl @Inject constructor(
         return dao.getAllCharacters()
     }
 
-//    override suspend fun getCharactersById(id: Int): DetailCharacterData? {
-//        return dao.getCharacterById(id)
-//    }
+    override suspend fun getCharactersById(id: Int): CharactersData? {
+        return dao.getCharacterById(id)
+    }
 
     override suspend fun insertCharacter(characterData: CharactersData) {
         dao.insertCharacters(characterData)

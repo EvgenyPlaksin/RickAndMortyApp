@@ -12,15 +12,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.lnight.rickandmortyfacts.common.Resource
+import com.lnight.rickandmortyfacts.domain.model.CharactersData
 import com.lnight.rickandmortyfacts.domain.use_case.character_detail.CharacterDetailUseCase
+import com.lnight.rickandmortyfacts.domain.use_case.characters_list.CharactersListUseCase
+import com.lnight.rickandmortyfacts.domain.use_case.get_cashed_detail.GetCashedDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     private val characterDetailUseCase: CharacterDetailUseCase,
+    private val getCashedDetailUseCase: GetCashedDetailUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -43,8 +49,14 @@ class CharacterDetailViewModel @Inject constructor(
                     _state.value = CharacterState(characterData = result.data)
                 }
                 is Resource.Error -> {
-                    _state.value =
-                        CharacterState(error = result.message ?: "Unknown error occurred")
+                  viewModelScope.launch {
+                      val data = getCashedDetailUseCase(id)
+                      if(data == null) {
+                          _state.value = CharacterState(error = result.message ?: "Unknown error occurred")
+                      } else {
+                          _state.value = CharacterState(characterData = data)
+                      }
+                  }
                 }
                 is Resource.Loading -> {
                     _state.value = CharacterState(isLoading = true)

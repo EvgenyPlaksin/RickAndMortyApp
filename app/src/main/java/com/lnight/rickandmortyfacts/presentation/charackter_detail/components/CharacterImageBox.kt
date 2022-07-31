@@ -51,9 +51,13 @@ fun CharacterImageBox(
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = true){
         scope.launch {
-            val result = request.context.imageLoader.execute(request).drawable!!
-            viewModel.calcDominantColor(result) { color ->
-                dominantColor = color
+            try {
+                val result = request.context.imageLoader.execute(request).drawable!!
+                viewModel.calcDominantColor(result) { color ->
+                    dominantColor = color
+                }
+            } catch (e: NullPointerException) {
+                dominantColor = Color.Black
             }
         }
     }
