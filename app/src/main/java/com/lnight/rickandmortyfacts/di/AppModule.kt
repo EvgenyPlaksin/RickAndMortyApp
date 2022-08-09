@@ -38,7 +38,7 @@ object AppModule {
             app,
             RickAndMortyDatabase::class.java,
             RickAndMortyDatabase.DATABASE_NAME
-        ).build().dao
+        ).fallbackToDestructiveMigration().build().dao
     }
 
 }

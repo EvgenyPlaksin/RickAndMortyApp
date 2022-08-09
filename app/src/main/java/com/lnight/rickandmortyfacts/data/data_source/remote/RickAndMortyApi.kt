@@ -1,6 +1,7 @@
 package com.lnight.rickandmortyfacts.data.data_source.remote
 
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.CharactersListResponseDto
+import com.lnight.rickandmortyfacts.data.data_source.remote.dto.LocationResponseDto
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,4 +18,9 @@ interface RickAndMortyApi {
     suspend fun getCharacterById(
         @Path("id") id: Int
     ): Result
+
+    @GET("location/{id}")
+    suspend fun getLocationById(
+        @Path("id") id: Int
+    ): LocationResponseDto
 }

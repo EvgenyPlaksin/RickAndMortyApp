@@ -1,14 +1,18 @@
 package com.lnight.rickandmortyfacts.presentation.charackter_detail.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.lnight.rickandmortyfacts.presentation.charackter_detail.CharacterDetailViewModel
 import com.lnight.rickandmortyfacts.presentation.common.RetrySection
@@ -19,6 +23,7 @@ fun CharacterDetailScreen(
     isCompactScreen: Boolean = true
 ) {
     val state = viewModel.state.value
+    val locationState = viewModel.locationState.value
 
     if(state.error.isNotBlank()) {
         Box(
@@ -68,6 +73,22 @@ fun CharacterDetailScreen(
                     characterData = state.characterData,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
+                Spacer(modifier = Modifier.height(20.dp))
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    if(locationState.locationData != null) {
+                        items(locationState.locationData.charactersUrl) {
+                            Text(
+                                text = it,
+                                fontSize = 25.sp,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
             }
         } else {
             Column(

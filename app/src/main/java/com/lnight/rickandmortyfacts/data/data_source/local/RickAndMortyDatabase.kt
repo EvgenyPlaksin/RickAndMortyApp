@@ -6,7 +6,7 @@ import com.lnight.rickandmortyfacts.domain.model.CharactersData
 
 @Database(
     entities = [CharactersData::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class RickAndMortyDatabase: RoomDatabase() {

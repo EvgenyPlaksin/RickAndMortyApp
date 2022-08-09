@@ -1,9 +1,11 @@
 package com.lnight.rickandmortyfacts.domain.model.mappers
 
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.CharactersListResponseDto
+import com.lnight.rickandmortyfacts.data.data_source.remote.dto.LocationResponseDto
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Result
 import com.lnight.rickandmortyfacts.domain.model.CharactersData
 import com.lnight.rickandmortyfacts.domain.model.CharactersListEntity
+import com.lnight.rickandmortyfacts.domain.model.LocationData
 
 fun CharactersListResponseDto.toCharactersListEntity(): CharactersListEntity {
     val charactersData = mutableListOf<CharactersData>()
@@ -21,7 +23,8 @@ fun CharactersListResponseDto.toCharactersListEntity(): CharactersListEntity {
                 gender = result.gender,
                 cityName = result.location.name,
                 species = result.species,
-                status = status
+                status = status,
+                locationUrl = result.location.url
             )
         )
     }
@@ -46,6 +49,15 @@ fun Result.toCharacterData(): CharactersData {
         gender = gender,
         cityName = location.name,
         status = status,
-        species = species
+        species = species,
+        locationUrl = location.url
+    )
+}
+
+fun LocationResponseDto.toLocationData(): LocationData {
+    return LocationData(
+        name = name,
+        type = type,
+        charactersUrl = residents
     )
 }

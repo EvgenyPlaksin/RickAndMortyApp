@@ -2,6 +2,7 @@ package com.lnight.rickandmortyfacts.data.repository
 
 import com.lnight.rickandmortyfacts.data.data_source.remote.RickAndMortyApi
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.CharactersListResponseDto
+import com.lnight.rickandmortyfacts.data.data_source.remote.dto.LocationResponseDto
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Result
 import com.lnight.rickandmortyfacts.domain.repository.ApiRepository
 import javax.inject.Inject
@@ -15,5 +16,9 @@ class ApiRepositoryImpl @Inject constructor(
 
     override suspend fun getCharacterById(id: Int): Result {
         return api.getCharacterById(id)
+    }
+
+    override suspend fun getLocationById(id: Int): LocationResponseDto {
+        return api.getLocationById(id)
     }
 }

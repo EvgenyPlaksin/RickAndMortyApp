@@ -11,5 +11,6 @@ data class CharactersData(
     val gender: String,
     val cityName: String,
     val status: Boolean?,
-    val species: String
+    val species: String,
+    val locationUrl: String
 )
