@@ -5,8 +5,6 @@ import androidx.room.Room
 import com.lnight.rickandmortyfacts.data.data_source.local.RickAndMortyDao
 import com.lnight.rickandmortyfacts.data.data_source.local.RickAndMortyDatabase
 import com.lnight.rickandmortyfacts.data.data_source.remote.RickAndMortyApi
-import com.lnight.rickandmortyfacts.data.repository.LocalRepositoryImpl
-import com.lnight.rickandmortyfacts.domain.repository.LocalRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
