@@ -5,9 +5,8 @@ import com.lnight.rickandmortyfacts.data.data_source.remote.dto.CharactersListRe
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.LocationResponseDto
 import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Result
 import com.lnight.rickandmortyfacts.domain.repository.ApiRepository
-import javax.inject.Inject
 
-class ApiRepositoryImpl @Inject constructor(
+class ApiRepositoryImpl (
     private val api: RickAndMortyApi
 ) : ApiRepository {
     override suspend fun getCharactersList(page: Int): CharactersListResponseDto {

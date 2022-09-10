@@ -4,17 +4,12 @@ import com.lnight.rickandmortyfacts.domain.model.CharactersListEntity
 import com.lnight.rickandmortyfacts.domain.model.mappers.toCharactersListEntity
 import com.lnight.rickandmortyfacts.domain.repository.ApiRepository
 import com.lnight.rickandmortyfacts.common.Resource
-import com.lnight.rickandmortyfacts.data.data_source.remote.dto.Info
-import com.lnight.rickandmortyfacts.domain.repository.LocalRepository
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
 import retrofit2.HttpException
 import java.io.IOException
-import javax.inject.Inject
 
-class CharactersListUseCase @Inject constructor(
+class CharactersListUseCase (
     private val apiRepository: ApiRepository
 ) {
 

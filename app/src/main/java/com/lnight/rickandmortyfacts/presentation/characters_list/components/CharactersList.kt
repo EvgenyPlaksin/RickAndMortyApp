@@ -2,7 +2,6 @@ package com.lnight.rickandmortyfacts.presentation.characters_list.components
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -13,18 +12,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.lnight.rickandmortyfacts.common.Screen
 import com.lnight.rickandmortyfacts.common.shouldLoadMore
 import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListViewModel
 import com.lnight.rickandmortyfacts.presentation.common.RetrySection
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun CharactersList(
     modifier: Modifier = Modifier,
-    viewModel: CharactersListViewModel = hiltViewModel(),
+    viewModel: CharactersListViewModel = getViewModel(),
     navController: NavController,
     isCompactScreen: Boolean = true
 ) {

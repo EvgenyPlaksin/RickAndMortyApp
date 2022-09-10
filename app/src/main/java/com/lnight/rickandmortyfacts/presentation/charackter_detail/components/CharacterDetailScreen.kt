@@ -9,19 +9,24 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.lnight.rickandmortyfacts.presentation.charackter_detail.CharacterDetailViewModel
 import com.lnight.rickandmortyfacts.presentation.common.RetrySection
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun CharacterDetailScreen(
-    viewModel: CharacterDetailViewModel = hiltViewModel(),
-    isCompactScreen: Boolean = true
+    viewModel: CharacterDetailViewModel = getViewModel(),
+    isCompactScreen: Boolean = true,
+    id: Int?
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.getCharacterData(id)
+    }
     val state = viewModel.state.value
     val locationState = viewModel.locationState.value
 
@@ -33,7 +38,7 @@ fun CharacterDetailScreen(
             RetrySection(
                 text = state.error,
                 onClick = {
-                    viewModel.getCharacterData()
+                    viewModel.getCharacterData(id)
                 }
             )
         }

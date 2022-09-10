@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
@@ -15,18 +14,14 @@ import com.lnight.rickandmortyfacts.common.Resource
 import com.lnight.rickandmortyfacts.domain.use_case.character_detail.CharacterDetailUseCase
 import com.lnight.rickandmortyfacts.domain.use_case.get_cashed_detail.GetCashedDetailUseCase
 import com.lnight.rickandmortyfacts.domain.use_case.get_location.GetLocationUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class CharacterDetailViewModel @Inject constructor(
+class CharacterDetailViewModel (
     private val characterDetailUseCase: CharacterDetailUseCase,
     private val getCashedDetailUseCase: GetCashedDetailUseCase,
-    private val getLocationUseCase: GetLocationUseCase,
-    private val savedStateHandle: SavedStateHandle
+    private val getLocationUseCase: GetLocationUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf<CharacterState>(CharacterState())
@@ -35,12 +30,7 @@ class CharacterDetailViewModel @Inject constructor(
     private val _locationState = mutableStateOf<LocationState>(LocationState())
     val locationState: State<LocationState> = _locationState
 
-    init {
-        getCharacterData()
-    }
-
-    fun getCharacterData() {
-        val id = savedStateHandle.get<Int>("id")
+    fun getCharacterData(id: Int?) {
         if (id == null || id == -1) {
             _state.value = CharacterState(error = "Unknown error occurred")
             return

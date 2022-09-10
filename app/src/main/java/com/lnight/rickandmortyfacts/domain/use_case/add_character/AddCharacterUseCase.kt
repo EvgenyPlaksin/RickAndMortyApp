@@ -2,9 +2,8 @@ package com.lnight.rickandmortyfacts.domain.use_case.add_character
 
 import com.lnight.rickandmortyfacts.domain.model.CharactersData
 import com.lnight.rickandmortyfacts.domain.repository.LocalRepository
-import javax.inject.Inject
 
-class AddCharacterUseCase @Inject constructor(
+class AddCharacterUseCase(
     private val localRepository: LocalRepository
 ){
 

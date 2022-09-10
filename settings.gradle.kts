@@ -12,9 +12,6 @@ pluginManagement {
             if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
                 useVersion("1.7.10")
             }
-            if (requested.id.id.startsWith("dagger.hilt.android")) {
-                useModule("com.google.dagger:hilt-android-gradle-plugin:2.42")
-            }
         }
     }
 }
