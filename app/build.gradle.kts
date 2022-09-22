@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt") version "1.7.10"
+    id("dagger.hilt.android.plugin")
 }
 
 repositories {
@@ -96,10 +97,11 @@ dependencies {
     implementation(Dependencies.Coroutines.lifecycleViewModel)
     implementation(Dependencies.Coroutines.lifecycleRuntime)
 
-    // Koin
-    implementation(Dependencies.Koin.android)
-    implementation(Dependencies.Koin.compose)
-    implementation(Dependencies.Koin.navigation)
+    // Dagger - Hilt
+    implementation(Dependencies.Hilt.android)
+    kapt(Dependencies.Hilt.androidCompiler)
+    kapt(Dependencies.Hilt.compiler)
+    implementation(Dependencies.Hilt.navigation)
 
     // Retrofit
     implementation(Dependencies.Retrofit.retrofit)
