@@ -9,20 +9,24 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListViewModel
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
     hint: String = "",
     onSearch: (String) -> Unit = {},
-    viewModel: CharactersListViewModel = getViewModel()
+    viewModel: CharactersListViewModel = hiltViewModel()
 ) {
     val text = viewModel.searchText.value
 

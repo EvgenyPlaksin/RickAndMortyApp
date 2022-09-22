@@ -2,19 +2,21 @@ package com.lnight.rickandmortyfacts.presentation.characters_list.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.lnight.rickandmortyfacts.R
 import com.lnight.rickandmortyfacts.presentation.characters_list.CharactersListViewModel
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun CharactersListScreen(
-    viewModel: CharactersListViewModel = getViewModel(),
+    viewModel: CharactersListViewModel = hiltViewModel(),
     navController: NavController,
     isCompactScreen: Boolean = true
 ) {

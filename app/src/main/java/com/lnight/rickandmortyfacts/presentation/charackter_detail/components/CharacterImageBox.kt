@@ -16,19 +16,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.SubcomposeAsyncImage
 import coil.imageLoader
 import coil.request.ImageRequest
 import com.lnight.rickandmortyfacts.presentation.charackter_detail.CharacterDetailViewModel
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun CharacterImageBox(
     image: String,
     name: String,
     modifier: Modifier = Modifier,
-    viewModel: CharacterDetailViewModel = getViewModel(),
+    viewModel: CharacterDetailViewModel = hiltViewModel(),
     imageSize: Dp = 300.dp
 ) {
 

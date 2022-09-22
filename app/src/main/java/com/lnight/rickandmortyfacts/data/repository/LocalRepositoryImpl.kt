@@ -4,9 +4,10 @@ import com.lnight.rickandmortyfacts.data.data_source.local.RickAndMortyDao
 import com.lnight.rickandmortyfacts.domain.model.CharactersData
 import com.lnight.rickandmortyfacts.domain.repository.LocalRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class LocalRepositoryImpl(
-    private val dao: RickAndMortyDao
+class LocalRepositoryImpl @Inject constructor(
+        private val dao: RickAndMortyDao
 ): LocalRepository {
     override fun getCharacters(): Flow<List<CharactersData>> {
         return dao.getAllCharacters()

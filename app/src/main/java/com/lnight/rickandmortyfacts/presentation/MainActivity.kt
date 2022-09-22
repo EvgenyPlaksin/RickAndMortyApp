@@ -16,7 +16,9 @@ import com.lnight.rickandmortyfacts.common.Screen
 import com.lnight.rickandmortyfacts.presentation.charackter_detail.components.CharacterDetailScreen
 import com.lnight.rickandmortyfacts.presentation.characters_list.components.CharactersListScreen
 import com.lnight.rickandmortyfacts.presentation.ui.theme.RickAndMortyFactsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +53,11 @@ class MainActivity : ComponentActivity() {
                                     defaultValue = -1
                                 }
                             )
-                        ) { backStackEntry ->
+                        ) {
                             if(windowInfo.screenWidthInfo is WindowInfo.WindowType.Compact) {
-                                val id = backStackEntry.arguments?.getInt("id")
-                                CharacterDetailScreen(id = id)
+                                CharacterDetailScreen()
                             } else {
-                                CharacterDetailScreen(isCompactScreen = false, id = id)
+                                CharacterDetailScreen(isCompactScreen = false)
                             }
                         }
                     }

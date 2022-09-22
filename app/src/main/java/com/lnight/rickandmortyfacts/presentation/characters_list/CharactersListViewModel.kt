@@ -11,12 +11,15 @@ import com.lnight.rickandmortyfacts.domain.use_case.characters_list.CharactersLi
 import com.lnight.rickandmortyfacts.common.Resource
 import com.lnight.rickandmortyfacts.domain.use_case.add_character.AddCharacterUseCase
 import com.lnight.rickandmortyfacts.domain.use_case.get_cashed_list.GetCashedListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CharactersListViewModel (
+@HiltViewModel
+class CharactersListViewModel @Inject constructor(
     private val charactersListUseCase: CharactersListUseCase,
     private val getCashedListUseCase: GetCashedListUseCase,
     private val addCharacterUseCase: AddCharacterUseCase
