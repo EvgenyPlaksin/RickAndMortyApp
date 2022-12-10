@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt") version "1.7.10"
+    kotlin("kapt") version "1.7.20"
     id("dagger.hilt.android.plugin")
 }
 
@@ -73,9 +73,11 @@ dependencies {
     testImplementation(Dependencies.Test.junitTest)
     androidTestImplementation(Dependencies.Test.junitExtTest)
     androidTestImplementation(Dependencies.Test.espresso)
+    androidTestImplementation(platform(Dependencies.Compose.composeBom))
 
 
     // Compose dependencies
+    implementation(platform(Dependencies.Compose.composeBom))
     implementation(Dependencies.Compose.ui)
     implementation(Dependencies.Compose.material)
     implementation(Dependencies.Compose.tooling)
